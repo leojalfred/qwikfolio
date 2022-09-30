@@ -1,6 +1,6 @@
 {
-  "name": "my-qwik-basic-starter",
-  "description": "Recommended for your first Qwik app",
+  "name": "qwikfolio",
+  "description": "Leo Alfred's portfolio website, redesigned and redeveloped with Qwik.",
   "engines": {
     "node": ">=15.0.0"
   },
@@ -19,11 +19,15 @@
     "start": "vite --open --mode ssr",
     "qwik": "qwik"
   },
+  "dependencies": {
+    "three": "^0.145.0"
+  },
   "devDependencies": {
     "@builder.io/qwik": "0.9.0",
     "@builder.io/qwik-city": "0.0.111",
     "@types/eslint": "8.4.6",
     "@types/node": "latest",
+    "@types/three": "^0.144.0",
     "@typescript-eslint/eslint-plugin": "5.37.0",
     "@typescript-eslint/parser": "5.37.0",
     "eslint": "8.23.1",
