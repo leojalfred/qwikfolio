@@ -1,0 +1,68 @@
+@use '/src/variables' as *;
+@use '/src/mixins' as *;
+
+.icons {
+  animation: lift 2s ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(8, 1fr);
+  margin: 0 auto;
+  padding: 6rem 0;
+  rotate: 45deg;
+  transform: translate(-0.5rem, -0.5rem);
+  width: fit-content;
+
+  @keyframes lift {
+    from {
+      transform: translate(-0.5rem, -0.5rem);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  &__icon {
+    animation: scale 2s ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    border-radius: 50%;
+    font-size: 2rem;
+    line-height: 0;
+    padding: 0.5rem;
+    scale: 0.65;
+    rotate: -45deg;
+    width: fit-content;
+
+    @keyframes scale {
+      from {
+        scale: 0.65;
+      }
+
+      to {
+        scale: 1;
+      }
+    }
+
+    $gradients: ($cyan, $lime), ($orange, $pink), ($yellow, $orange),
+      ($red, $grape), ($grape, $red), ($violet, $cyan), ($green, $yellow),
+      ($pink, $orange), ($teal, $blue), ($yellow, $green), ($red, $yellow),
+      ($cyan, $indigo), ($grape, $yellow), ($blue, $teal), ($pink, $indigo),
+      ($lime, $teal);
+
+    @for $i from 1 through length($gradients) {
+      &:nth-child(#{$i}n) {
+        $gradient: nth($gradients, $i);
+        @include diagonal-gradient(nth($gradient, 1), nth($gradient, 2));
+      }
+    }
+
+    @for $i from 1 through 8 {
+      &:nth-child(8n + #{$i}) {
+        animation-delay: #{$i * 250}ms;
+      }
+    }
+  }
+}

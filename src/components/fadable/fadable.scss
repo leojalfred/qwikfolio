@@ -1,0 +1,10 @@
+.fadable {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: 1s opacity, 1s transform;
+}
+
+.fadable--shown {
+  opacity: 1;
+  transform: translateY(0);
+}

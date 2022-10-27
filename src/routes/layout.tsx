@@ -1,11 +1,14 @@
 import {
-  component$ /* Slot */,
+  $,
+  component$,
+  Slot,
   useClientEffect$,
-  useRef,
+  useOnWindow,
+  useSignal,
   useStore
 } from '@builder.io/qwik'
 import * as THREE from 'three'
-// import Header from '../components/header/header';
+import { fadeInVisibleSections } from '~/helpers'
 
 export let camera: THREE.PerspectiveCamera,
   scene: THREE.Scene,
@@ -31,76 +34,75 @@ export function init() {
   document.body.appendChild(renderer.domElement)
 }
 
-export function addSphere() {
-  for (let z = -1000; z < 1000; z += 5) {
-    const geometry = new THREE.SphereGeometry(0.5, 32, 32)
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff })
-    const sphere = new THREE.Mesh(geometry, material)
-
-    sphere.position.x = Math.random() * 1000 - 500
-    sphere.position.y = Math.random() * 1000 - 500
-    sphere.position.z = z
-    sphere.scale.x = sphere.scale.y = 2
-
-    scene.add(sphere)
-    stars.push(sphere)
-  }
-}
-
-export function render() {
+export function render(scrollDifference: number) {
   renderer.render(scene, camera)
+
+  for (const star of stars) {
+    star.position.z += scrollDifference / 10
+    if (star.position.z > 1000) star.position.z -= 2000
+    else if (star.position.z < -1000) star.position.z += 2000
+  }
+
+  camera.lookAt(0, 0, 0)
 }
 
 export default component$(() => {
   useClientEffect$(() => {
     init()
-    addSphere()
-    render()
+
+    // add stars
+    for (let z = -1000; z < 1000; z += 5) {
+      const geometry = new THREE.SphereGeometry(0.5, 32, 32)
+      const material = new THREE.MeshBasicMaterial({ color: 0xffffff })
+      const sphere = new THREE.Mesh(geometry, material)
+
+      sphere.position.x = Math.random() * 1000 - 500
+      sphere.position.y = Math.random() * 1000 - 500
+      sphere.position.z = z
+
+      scene.add(sphere)
+      stars.push(sphere)
+    }
+
+    renderer.render(scene, camera)
   })
 
-  // TODO handle window resize
-
-  const main = useRef()
+  const main = useSignal<HTMLDivElement>()
   const state = useStore({
     lastScrollTop: 0,
     scrollDifference: 0
   })
 
+  useOnWindow('load', $(fadeInVisibleSections))
+  useOnWindow('scroll', $(fadeInVisibleSections))
+  useOnWindow('resize', $(fadeInVisibleSections))
+
+  useOnWindow(
+    'resize',
+    $(() => {
+      camera.aspect = window.innerWidth / window.innerHeight
+      camera.updateProjectionMatrix()
+
+      renderer.setSize(window.innerWidth, window.innerHeight)
+
+      requestAnimationFrame(() => render(state.scrollDifference))
+    })
+  )
+
   return (
-    // <>
-    //   <main>
-    //     <Header />
-    //     <section>
-    //       <Slot />
-    //     </section>
-    //   </main>
-    //   <footer>
-    //     <a href="https://www.builder.io/" target="_blank">
-    //       Made with ♡ by Builder.io
-    //     </a>
-    //   </footer>
-    // </>
-    <main
+    <div
+      className="canvas"
       ref={main}
       onScroll$={() => {
-        if (main.current) {
-          const st = main.current.scrollTop
+        if (main.value) {
+          const st = main.value.scrollTop
           state.scrollDifference = st - state.lastScrollTop
-          requestAnimationFrame(() => {
-            renderer.render(scene, camera)
-
-            for (let i = 0; i < stars.length; i++) {
-              const star = stars[i]
-              star.position.z += state.scrollDifference / 10
-              if (star.position.z > 1000) star.position.z -= 2000
-              else if (star.position.z < -1000) star.position.z += 2000
-            }
-          })
+          requestAnimationFrame(() => render(state.scrollDifference))
           state.lastScrollTop = st <= 0 ? 0 : st
         }
       }}
     >
-      <div></div>
-    </main>
+      <Slot />
+    </div>
   )
 })

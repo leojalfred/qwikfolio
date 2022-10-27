@@ -1,0 +1,4 @@
+@mixin diagonal-gradient($a, $b) {
+  background-color: $a;
+  background-image: linear-gradient(45deg, $a, $b);
+}

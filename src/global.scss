@@ -1,0 +1,80 @@
+@use '/src/variables' as *;
+
+html {
+  overflow: hidden;
+}
+
+body {
+  color: white;
+  line-height: 1.15;
+  margin: 0;
+  overflow: hidden;
+}
+
+.canvas {
+  height: 100vh;
+  overflow-y: scroll;
+  position: absolute;
+  width: 100vw;
+}
+
+section {
+  align-items: center;
+  display: flex;
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 2rem;
+
+  > div {
+    flex: 1;
+  }
+}
+
+.placeholder {
+  height: 1000rem;
+}
+
+h1 {
+  font-family: $halant;
+  font-size: 4.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  font-family: $fira-mono;
+}
+
+p {
+  font-family: $fira-mono;
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: 0.5s color;
+
+  &--highlighted {
+    color: transparent;
+  }
+
+  &--red-grape {
+    background-image: linear-gradient(90deg, $red, $grape);
+  }
+
+  &--blue-indigo {
+    background-image: linear-gradient(90deg, $blue, $indigo);
+  }
+
+  &--orange-yellow {
+    background-image: linear-gradient(90deg, $orange, $yellow);
+  }
+
+  &--cyan-green {
+    background-image: linear-gradient(90deg, $cyan, $green);
+  }
+
+  &--orange-pink {
+    background-image: linear-gradient(90deg, $orange, $pink);
+  }
+}

@@ -1,10 +1,16 @@
-import { component$ } from '@builder.io/qwik';
-import { QwikCity, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
-import { RouterHead } from './components/router-head/router-head';
+import { component$, useStyles$ } from '@builder.io/qwik'
+import {
+  QwikCity,
+  RouterOutlet,
+  ServiceWorkerRegister
+} from '@builder.io/qwik-city'
+import { RouterHead } from './components/router-head/router-head'
 
-import './global.css';
+import styles from './global.scss?inline'
 
 export default component$(() => {
+  useStyles$(styles)
+
   /**
    * The root of a QwikCity site always start with the <QwikCity> component,
    * immediately followed by the document's <head> and <body>.
@@ -22,5 +28,5 @@ export default component$(() => {
         <ServiceWorkerRegister />
       </body>
     </QwikCity>
-  );
-});
+  )
+})
