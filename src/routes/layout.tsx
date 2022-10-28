@@ -47,18 +47,20 @@ export function render(scrollDifference: number) {
 }
 
 export default component$(() => {
+  const store = useStore({ z: -1000 })
+
   useClientEffect$(() => {
     init()
 
     // add stars
-    for (let z = -1000; z < 1000; z += 5) {
+    for (; store.z < 1000; store.z += 5) {
       const geometry = new THREE.SphereGeometry(0.5, 32, 32)
       const material = new THREE.MeshBasicMaterial({ color: 0xffffff })
       const sphere = new THREE.Mesh(geometry, material)
 
       sphere.position.x = Math.random() * 1000 - 500
       sphere.position.y = Math.random() * 1000 - 500
-      sphere.position.z = z
+      sphere.position.z = store.z
 
       scene.add(sphere)
       stars.push(sphere)
