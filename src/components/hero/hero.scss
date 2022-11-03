@@ -1,0 +1,10 @@
+@use '/src/variables' as *;
+@use '/src/mixins' as *;
+
+.hero__text {
+  text-align: center;
+
+  @include breakpoint($xl) {
+    text-align: left;
+  }
+}

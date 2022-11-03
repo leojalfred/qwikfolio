@@ -1,13 +1,17 @@
 import {
   component$,
+  useStylesScoped$,
   useSignal,
   useStore,
   useClientEffect$
 } from '@builder.io/qwik'
 import Fadable from '../fadable/fadable'
 import Icons from './icons/icons'
+import styles from './hero.scss?inline'
 
 export default component$(() => {
+  useStylesScoped$(styles)
+
   const subtitle = useSignal<HTMLHeadingElement>()
   const store = useStore({ index: 0 })
 
@@ -25,7 +29,7 @@ export default component$(() => {
 
   return (
     <Fadable>
-      <div>
+      <div className="hero__text">
         <h1>
           Hi, I'm Leo.
           <br />I bring ideas to life.

@@ -1,5 +1,7 @@
 @use '/src/variables' as *;
+@use '/src/mixins' as *;
 
+/* Document */
 html {
   overflow: hidden;
 }
@@ -18,16 +20,12 @@ body {
   width: 100vw;
 }
 
+/* Sections */
 section {
-  align-items: center;
-  display: flex;
-  gap: 2rem;
-  margin: 0 auto;
-  max-width: 1400px;
   padding: 2rem;
 
-  > div {
-    flex: 1;
+  > div:first-child {
+    margin-bottom: 4rem;
   }
 }
 
@@ -35,18 +33,20 @@ section {
   height: 1000rem;
 }
 
+/* Typography */
 h1 {
   font-family: $halant;
-  font-size: 4.5rem;
+  font-size: 2.2rem;
   margin-top: 0;
 }
 
 .subtitle {
-  font-family: $fira-mono;
+  font-family: $ubuntu-mono;
+  font-size: 1.4rem;
 }
 
 p {
-  font-family: $fira-mono;
+  font-family: $ubuntu-mono;
 }
 
 .text-gradient {
@@ -76,5 +76,32 @@ p {
 
   &--orange-pink {
     background-image: linear-gradient(90deg, $orange, $pink);
+  }
+}
+
+@include breakpoint($s) {
+  /* Typography */
+  h1 {
+    font-size: 4.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.8rem;
+  }
+}
+
+@include breakpoint($xl) {
+  /* Sections */
+  section {
+    align-items: center;
+    display: flex;
+    gap: 2rem;
+    margin: 0 auto;
+    max-width: 1400px;
+    padding: 2rem;
+
+    > div {
+      flex: 1;
+    }
   }
 }

@@ -20,7 +20,7 @@ export const RouterHead = component$(() => {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       <link
-        href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Halant:wght@600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono&family=Halant:wght@600&display=swap"
         rel="stylesheet"
       />
       <link
