@@ -3,12 +3,11 @@ import {
   component$,
   Slot,
   useClientEffect$,
-  useOnWindow,
   useSignal,
   useStore
 } from '@builder.io/qwik'
 import * as THREE from 'three'
-import { fadeInVisibleSections } from '~/helpers'
+import { fadeInFadables } from '~/helpers'
 
 export let camera: THREE.PerspectiveCamera,
   scene: THREE.Scene,
@@ -75,22 +74,6 @@ export default component$(() => {
     scrollDifference: 0
   })
 
-  useOnWindow('load', $(fadeInVisibleSections))
-  useOnWindow('scroll', $(fadeInVisibleSections))
-  useOnWindow('resize', $(fadeInVisibleSections))
-
-  useOnWindow(
-    'resize',
-    $(() => {
-      camera.aspect = window.innerWidth / window.innerHeight
-      camera.updateProjectionMatrix()
-
-      renderer.setSize(window.innerWidth, window.innerHeight)
-
-      requestAnimationFrame(() => render(state.scrollDifference))
-    })
-  )
-
   return (
     <div
       className="canvas"
@@ -103,6 +86,16 @@ export default component$(() => {
           state.lastScrollTop = st <= 0 ? 0 : st
         }
       }}
+      window:onLoad$={$(fadeInFadables)}
+      window:onScroll$={$(fadeInFadables)}
+      window:onResize$={$(() => {
+        camera.aspect = window.innerWidth / window.innerHeight
+        camera.updateProjectionMatrix()
+        renderer.setSize(window.innerWidth, window.innerHeight)
+        requestAnimationFrame(() => render(state.scrollDifference))
+
+        fadeInFadables()
+      })}
     >
       <Slot />
     </div>
