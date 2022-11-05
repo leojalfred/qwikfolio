@@ -15,6 +15,7 @@ body {
 
 .canvas {
   height: 100vh;
+  overflow-x: hidden;
   overflow-y: scroll;
   position: absolute;
   width: 100vw;
@@ -90,7 +91,7 @@ p {
   }
 }
 
-@include breakpoint($xl) {
+@include breakpoint($xxl) {
   /* Sections */
   section {
     align-items: center;
@@ -102,6 +103,10 @@ p {
 
     > div {
       flex: 1;
+
+      &:first-child {
+        margin-bottom: 0;
+      }
     }
   }
 }

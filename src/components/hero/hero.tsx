@@ -28,7 +28,7 @@ export default component$(() => {
   })
 
   return (
-    <Fadable>
+    <Fadable className="hero">
       <div className="hero__text">
         <h1>
           Hi, I'm Leo.
